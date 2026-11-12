@@ -5,19 +5,29 @@ import { getMovies } from '../../services/movieService';
 import css from './App.module.css';
 import SearchBar from '../SearchBar/SearchBar';
 import MovieGrid from '../MovieGrid/MovieGrid';
+import Loader from '../Loader/Loader';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleMoviesSearch = async (query: string) => {
-    const movies = await getMovies(query);
+    try {
+      setMovies([]);
+      setLoading(true);
 
-    if (!movies.length) {
-      toast('No movies found for your request.');
-      return;
+      const results = await getMovies(query);
+
+      if (!results.length) {
+        toast('No movies found for your request.');
+        return;
+      }
+
+      setMovies(results);
+    } catch {
+    } finally {
+      setLoading(false);
     }
-
-    setMovies(movies);
   };
 
   const handleMovieClick = (movie: Movie) => {};
@@ -28,6 +38,7 @@ function App() {
       {movies.length > 0 && (
         <MovieGrid onSelect={handleMovieClick} movies={movies} />
       )}
+      {loading && <Loader />}
       <Toaster />
     </div>
   );

@@ -1,5 +1,5 @@
 import css from './MovieGrid.module.css';
-import type { Movie } from '../../types/movie.ts';
+import type { Movie } from '../../types/movie';
 
 interface MovieGridProps {
   onSelect: (movie: Movie) => void;
@@ -14,7 +14,7 @@ function MovieGrid({ onSelect, movies }: MovieGridProps) {
           <div className={css.card}>
             <img
               className={css.image}
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
               loading="lazy"
             />
