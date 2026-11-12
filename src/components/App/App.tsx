@@ -7,9 +7,11 @@ import SearchBar from '../SearchBar/SearchBar';
 import MovieGrid from '../MovieGrid/MovieGrid';
 import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import MovieModal from '../MovieModal/MovieModal';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +36,13 @@ function App() {
     }
   };
 
-  const handleMovieClick = (movie: Movie) => {};
+  const handleMovieClick = (movie: Movie) => {
+    setSelectedMovie(movie);
+  };
+
+  const handleModalClose = () => {
+    setSelectedMovie(null);
+  };
 
   return (
     <div className={css.app}>
@@ -44,6 +52,9 @@ function App() {
       )}
       {loading && <Loader />}
       {error && <ErrorMessage />}
+      {selectedMovie && (
+        <MovieModal movie={selectedMovie} onClose={handleModalClose} />
+      )}
       <Toaster />
     </div>
   );
