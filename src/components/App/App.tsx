@@ -6,14 +6,17 @@ import css from './App.module.css';
 import SearchBar from '../SearchBar/SearchBar';
 import MovieGrid from '../MovieGrid/MovieGrid';
 import Loader from '../Loader/Loader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleMoviesSearch = async (query: string) => {
     try {
       setMovies([]);
+      setError(false);
       setLoading(true);
 
       const results = await getMovies(query);
@@ -25,6 +28,7 @@ function App() {
 
       setMovies(results);
     } catch {
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -39,6 +43,7 @@ function App() {
         <MovieGrid onSelect={handleMovieClick} movies={movies} />
       )}
       {loading && <Loader />}
+      {error && <ErrorMessage />}
       <Toaster />
     </div>
   );
