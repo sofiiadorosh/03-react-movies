@@ -4,7 +4,7 @@ A React + TypeScript app for searching movies by keyword with the
 [TMDB API](https://developer.themoviedb.org/). Click a movie card to see its
 details in a modal window.
 
-**Live demo:** _add the Vercel link here_
+**Live demo:** https://03-react-movies-ten-navy.vercel.app/
 
 ## Features
 
